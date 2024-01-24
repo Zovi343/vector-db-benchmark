@@ -1,11 +1,8 @@
 # import multiprocessing as mp
 from typing import List, Tuple
 
-# import httpx
-# from qdrant_client import QdrantClient
-# from qdrant_client.http import models as rest
-
 from engine.base_client.search import BaseSearcher
+from engine.clients.chroma.parser import ChromaConditionParser
 
 # from engine.clients.qdrant.config import QDRANT_COLLECTION_NAME
 
@@ -17,14 +14,14 @@ from engine.clients.chroma.config import CHROMA_PORT
 from chromadb.api.models.Collection import Collection
 from chromadb.config import Settings
 
-from chromadb import Client
+from chromadb import HttpClient
 
 
 class ChromaSearcher(BaseSearcher):
     search_params = {}
-    client: Client = None
+    client: HttpClient = None
     collection: Collection = None
-    # parser = QdrantConditionParser()
+    parser = ChromaConditionParser()
 
     @classmethod
     def init_client(cls, host, distance, connection_params: dict, search_params: dict):
@@ -34,13 +31,7 @@ class ChromaSearcher(BaseSearcher):
         #     limits=httpx.Limits(max_connections=None, max_keepalive_connections=0),
         #     **connection_params
         # )
-        cls.client = Client(
-            Settings(
-                chroma_api_impl="rest",
-                chroma_server_host=host,
-                chroma_server_http_port=CHROMA_PORT,
-            )
-        )
+        cls.client = HttpClient(host=host, port=CHROMA_PORT)
         cls.collection = cls.client.get_collection(CHROMA_COLLECTION_NAME)
         cls.search_params = search_params
 
@@ -60,5 +51,10 @@ class ChromaSearcher(BaseSearcher):
         #         **cls.search_params.get("search_params", {})
         #     ),
         # )
-        res = cls.collection.query(query_embeddings=[vector], n_results=25)
-        return [(res.get("ids")[0][0], res.get("distances")[0][0])]
+        res = cls.collection.query(
+            query_embeddings=[vector],
+            where=cls.parser.parse(meta_conditions),
+            n_results=top,
+        )
+
+        return list(zip(map(int, res.get("ids")[0]), res.get("distances")[0]))

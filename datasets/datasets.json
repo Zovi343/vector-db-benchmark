@@ -316,6 +316,17 @@
     }
   },
   {
+    "name": "random_keywords_10k",
+    "vector_size": 50,
+    "distance": "cosine",
+    "type": "tar",
+    "path": "random_keywords_10k",
+    "schema": {
+      "a": "keyword",
+      "b": "keyword"
+    }
+  },
+  {
     "name": "random-100-match-kw-small-vocab-no-filters",
     "vector_size": 256,
     "distance": "cosine",
