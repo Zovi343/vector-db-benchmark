@@ -1,0 +1,21 @@
+[
+    {
+      "name": "lvd-default",
+      "engine": "lvd",
+      "connection_params": {"port": "5000"},
+      "collection_params": {
+        "lmi:epochs": "[200]",
+        "lmi:model_types": "['MLP']",
+        "lmi:lrs": "[0.01]",
+        "lmi:n_categories": "[20]",
+        "lmi:kmeans": "{'verbose': False, 'seed': 2023}"
+      },
+      "search_params": [{
+        "n_buckets": 2,
+        "bruteforce_threshold": 0.2,
+        "constraint_weight": -1,
+        "search_until_bucket_not_empty": false
+      }],
+      "upload_params": { "parallel": 16, "batch_size": 1024 }
+    }
+  ]
