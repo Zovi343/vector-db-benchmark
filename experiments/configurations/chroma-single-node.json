@@ -9,6 +9,6 @@
           "hnsw:search_ef": 128
       },
       "search_params": [{}],
-      "upload_params": { "parallel": 16, "batch_size": 1024 }
+      "upload_params": { "parallel": 1, "batch_size": 1024 }
     }
   ]

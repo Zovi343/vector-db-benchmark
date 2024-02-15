@@ -1,0 +1,102 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: weaviate-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - hosts:
+        - weaviate.dyn.cloud.e-infra.cz
+      secretName: weaviate.dyn.cloud.e-infra.cz
+  rules:
+    - host: weaviate.dyn.cloud.e-infra.cz
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: "/"
+            backend:
+              service:
+                name: weaviate
+                port:
+                  name: api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weaviate
+spec:
+  ports:
+    - name: api
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+  selector:
+    application: weaviate
+  type: ClusterIP
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: weaviate
+  name: weaviate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: weaviate
+  template:
+    metadata:
+      labels:
+        application: weaviate
+    spec:
+      restartPolicy: Always
+      securityContext:
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: weaviate
+        image: registry.gitlab.ics.muni.cz:443/482857/db_wrappers:weaviate
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8090
+        args:
+          - --host
+          - "0.0.0.0"
+          - --port
+          - "8090"
+          - --scheme
+          - http
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        # Define resource requirements and limits for the container.
+        resources:
+          limits:
+            cpu: 1
+            memory: 8Gi
+        env:
+          - name: QUERY_DEFAULTS_LIMIT
+            value: "10"
+          - name: AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED
+            value: "true"
+          - name: PERSISTENCE_DATA_PATH
+            value: "/var/lib/weaviate"
+          - name: DEFAULT_VECTORIZER_MODULE
+            value: "none"
+          - name: ENABLE_MODULES
+            value: ""
+          - name: CLUSTER_HOSTNAME
+            value: "node1"
+          - name: GOMEMLIMIT
+            value: "25GiB"
+          - name: GOGC
+            value: "50"

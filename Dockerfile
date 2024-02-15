@@ -21,5 +21,5 @@ RUN poetry config virtualenvs.create false \
 # Creating folders, and files for a project:
 COPY . /code
 
-CMD ["python"]
+CMD ["python", "run.py", "--engines", "chroma-default", "--datasets", "random_keywords_10k", "--host", "chroma"]
 
