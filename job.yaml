@@ -28,9 +28,9 @@ spec:
 
       # Containers specification within the Pod.
       containers:
-      - name: ai-environment
+      - name: vector-db-benchmark
         # Specify the container image and its registry.
-        image: registry.gitlab.ics.muni.cz/482857/ai-environment:05-data-storage-in-k8s
+        image: registry.gitlab.ics.muni.cz:443/482857/vector-db-benchmark:latest
         # Always pull the latest image from the registry.
         imagePullPolicy: Always
         # Security context settings for the container - must be included in all k8s config files.
@@ -45,7 +45,7 @@ spec:
           # Set resource requests (minimum required resources).
           requests:
             cpu: 1
-            memory: 200Mi
+            memory: 1Gi
           # Set resource limits (maximum allowed resources).
           limits:
             cpu: 1
@@ -56,4 +56,4 @@ spec:
       volumes:
         - name: vol-1
           persistentVolumeClaim:
-            claimName: test-pvc
+            claimName: vector-db-pvc

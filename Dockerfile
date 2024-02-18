@@ -22,5 +22,5 @@ RUN poetry config virtualenvs.create false \
 COPY . /code
 RUN chmod 777 /code
 
-CMD ["python", "run.py", "--engines", "chroma-default", "--datasets", "random_keywords_10k", "--host", "chroma"]
+CMD ["python", "run.py", "--engines", "chroma-default", "--datasets", "random_keywords_10k", "--host", "chroma", "--kube"]
 

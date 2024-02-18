@@ -5,7 +5,7 @@
     "connection_params": {
       "timeout_config": 1000
     },
-    "collection_params": { "vectorIndexConfig": { "efConstruction": 100, "maxConnections": 16 } },
+    "collection_params": { "vectorIndexConfig": { "efConstruction": 128, "maxConnections": 16 } },
     "search_params": [
       { "parallel": 8, "vectorIndexConfig": { "ef": 128} }
     ],
