@@ -19,10 +19,9 @@
     },
     "collection_params": { "vectorIndexConfig": { "efConstruction": 128, "maxConnections": 16 } },
     "search_params": [
-      { "parallel": 1, "vectorIndexConfig": { "ef": 64} }, { "parallel": 1, "vectorIndexConfig": { "ef": 128} }, { "parallel": 1, "vectorIndexConfig": { "ef": 256} }, { "parallel": 1, "vectorIndexConfig": { "ef": 512} },
-      { "parallel": 100, "vectorIndexConfig": { "ef": 64} }, { "parallel": 100, "vectorIndexConfig": { "ef": 128} }, { "parallel": 100, "vectorIndexConfig": { "ef": 256} }, { "parallel": 100, "vectorIndexConfig": { "ef": 512} }
+      { "parallel": 1, "vectorIndexConfig": { "ef": 128} }
     ],
-    "upload_params": { "batch_size": 1000, "parallel": 5 }
+    "upload_params": { "batch_size": 1024, "parallel": 8 }
   },
   {
     "name": "weaviate-m-32-ef-128",

@@ -81,8 +81,8 @@ spec:
         # Define resource requirements and limits for the container.
         resources:
           limits:
-            cpu: 1
-            memory: 8Gi
+            cpu: 2
+            memory: 16Gi
         env:
           - name: QUERY_DEFAULTS_LIMIT
             value: "10"

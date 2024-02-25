@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: db-bench-pvc-inspector
+  name: vector-db-pvc-inspector
 spec:
   securityContext:
     fsGroupChangePolicy: OnRootMismatch
@@ -21,8 +21,8 @@ spec:
         - ALL
     volumeMounts:
     - mountPath: /pvc
-      name: db-bench-pvc
+      name: vector-db-pvc
   volumes:
-  - name: db-bench-pvc
+  - name: vector-db-pvc
     persistentVolumeClaim:
-      claimName: db-bench-pvc
+      claimName: vector-db-pvc

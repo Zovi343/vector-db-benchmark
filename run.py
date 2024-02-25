@@ -25,6 +25,7 @@ def run(
     skip_if_exists: bool = True,
     exit_on_error: bool = True,
     timeout: float = 86400.0,
+    exp_name: str = "",
     # If run on kubernetes, the datasets files need to be taken from volume
     kube: bool = False,
 ):
@@ -87,6 +88,9 @@ def run(
 
     now = datetime.now()
     experiment_timestamp = f"{now.second}_{now.minute}_{now.hour}_{now.day}_{now.month}_{now.year}"
+
+    if len(exp_name):
+        experiment_timestamp = exp_name
 
     if kube:
         copy_directory(RESULTS_DIR, KUBE_DIR + f"/results_{experiment_timestamp}")

@@ -22,4 +22,4 @@ RUN poetry config virtualenvs.create false \
 COPY . /code
 RUN chmod 777 /code
 
-CMD ["python", "run.py", "--engines", "chroma-default", "--datasets", "random_keywords_10k", "--host", "chroma", "--kube"]
+CMD ["python", "run.py", "--engines", "weaviate-m-16-ef-128", "--datasets", "random_keywords_10k", "--host", "weaviate", "exp_name", "10k_test", "--kube"]

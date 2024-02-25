@@ -1,14 +1,14 @@
 [
     {
-      "name": "chroma-default",
+      "name": "chroma-m-16-ef-100",
       "engine": "chroma",
       "connection_params": {"port": "8000"},
       "collection_params": {
-          "hnsw:construction_ef": 128,
+          "hnsw:construction_ef": 100,
           "hnsw:M": 16,
-          "hnsw:search_ef": 128
+          "hnsw:search_ef": 10
       },
       "search_params": [{}],
-      "upload_params": { "parallel": 1, "batch_size": 1024 }
+      "upload_params": { "parallel": 8, "batch_size": 1024 }
     }
   ]
