@@ -1,5 +1,5 @@
 from typing import List, Tuple
-
+import requests
 from engine.base_client.search import BaseSearcher
 from engine.clients.lvd.parser import LVDConditionParser
 
@@ -17,6 +17,8 @@ class LVDSearcher(BaseSearcher):
     client: HttpClient = None
     collection: Collection = None
     parser = LVDConditionParser()
+    upload_host = None
+    upload_port = None
 
     @classmethod
     def init_client(cls, host, distance, connection_params: dict, search_params: dict):
@@ -29,6 +31,8 @@ class LVDSearcher(BaseSearcher):
         cls.client = HttpClient(host=host, port=LVD_PORT)
         cls.collection = cls.client.get_collection(LVD_COLLECTION_NAME)
         cls.search_params = search_params
+        cls.upload_host = host
+        cls.upload_port = LVD_PORT
 
     # Uncomment for gRPC
     # @classmethod
@@ -46,15 +50,30 @@ class LVDSearcher(BaseSearcher):
         #         **cls.search_params.get("search_params", {})
         #     ),
         # )
-        res = cls.collection.query(
-            query_embeddings=[vector],
-            include=["distances"],
-            where=cls.parser.parse(meta_conditions),
-            n_results=top,
-            n_buckets=cls.search_params["n_buckets"],
-            bruteforce_threshold=cls.search_params["bruteforce_threshold"],
-            constraint_weight=cls.search_params["constraint_weight"],
-            search_until_bucket_not_empty=cls.search_params["search_until_bucket_not_empty"],
-        )
+        data =  {
+            "query_embeddings": [vector],
+            "include": ["distances"],
+            "where": cls.parser.parse(meta_conditions),
+            "n_results": top,
+            "n_buckets": cls.search_params["n_buckets"],
+            "bruteforce_threshold": cls.search_params["bruteforce_threshold"],
+            "constraint_weight": cls.search_params["constraint_weight"],
+            "search_until_bucket_not_empty": cls.search_params["search_until_bucket_not_empty"]
+        }
+
+        url = f"http://{cls.upload_host}:{cls.upload_port}/api/v1/collections/{cls.collection.id}/query"
+        res = requests.post(url, json=data, headers={}, verify=False)
+        res = res.json()
+        # res = cls.collection.query(
+        #     query_embeddings=[vector],
+        #     include=["distances"],
+        #     where=cls.parser.parse(meta_conditions),
+        #     n_results=top,
+        #     n_buckets=cls.search_params["n_buckets"],
+        #     bruteforce_threshold=cls.search_params["bruteforce_threshold"],
+        #     constraint_weight=cls.search_params["constraint_weight"],
+        #     search_until_bucket_not_empty=,
+        # )
+
 
         return list(zip(map(int, res.get("ids")[0]), res.get("distances")[0]))

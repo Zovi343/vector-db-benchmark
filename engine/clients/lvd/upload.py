@@ -1,5 +1,6 @@
 from typing import List, Optional
 from engine.base_client.upload import BaseUploader
+import requests
 
 from engine.clients.lvd.config import LVD_COLLECTION_NAME
 from engine.clients.lvd.config import LVD_PORT
@@ -13,6 +14,8 @@ class LVDUploader(BaseUploader):
     client: HttpClient = None
     upload_params = {}
     collection: Collection = None
+    upload_host = None
+    upload_port = None
 
     @classmethod
     def init_client(cls, host, distance, connection_params, upload_params):
@@ -20,6 +23,9 @@ class LVDUploader(BaseUploader):
         cls.client = HttpClient(host=host, port=LVD_PORT)
         cls.collection = cls.client.get_collection(LVD_COLLECTION_NAME)
         cls.upload_params = upload_params
+        cls.upload_host = host
+        cls.upload_port = LVD_PORT
+
 
     @classmethod
     def upload_batch(
@@ -38,7 +44,8 @@ class LVDUploader(BaseUploader):
 
     @classmethod
     def post_upload(cls, _distance):
-        cls.collection.build_index()
+        url = f"http://{cls.upload_host}:{cls.upload_port}/api/v1/collections/{cls.collection.id}/build_index"
+        requests.post(url, json={}, headers={}, verify=False)
         return {}
 
 

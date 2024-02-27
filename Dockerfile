@@ -18,14 +18,6 @@ COPY poetry.lock pyproject.toml /code/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-dev --no-interaction --no-ansi
 
-# Only necessary for lvd
-RUN apt-get update && apt-get install -y git
-RUN git clone https://gitlab.ics.muni.cz/482857/lvd.git
-WORKDIR /code/lvd
-RUN python setup.py sdist
-RUN pip install ./dist/lvd-0.1.tar.gz
-WORKDIR /code
-
 # Creating folders, and files for a project:
 COPY . /code
 RUN chmod 777 /code
