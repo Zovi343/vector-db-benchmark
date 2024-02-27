@@ -22,4 +22,4 @@ RUN poetry config virtualenvs.create false \
 COPY . /code
 RUN chmod 777 /code
 
-CMD ["python", "run.py", "--engines", "qdrant-m-16-ef-100", "--datasets", "hnm", "--host", "qdrant", "--expname", "hnm_bench", "--kube"]
+CMD ["python", "run.py", "--engines", "qdrant-m-16-ef-100", "--datasets", "hnm_no_filters", "--host", "qdrant", "--expname", "hnm_bench", "--kube"]
