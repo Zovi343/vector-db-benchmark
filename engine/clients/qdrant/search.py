@@ -22,7 +22,7 @@ class QdrantSearcher(BaseSearcher):
         os.environ["GRPC_POLL_STRATEGY"] = "epoll,poll"
         cls.client: QdrantClient = QdrantClient(
             host,
-            prefer_grpc=True,
+            prefer_grpc=False,
             limits=httpx.Limits(max_connections=None, max_keepalive_connections=0),
             **connection_params
         )
