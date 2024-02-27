@@ -47,6 +47,10 @@ class ChromaUploader(BaseUploader):
         cls, ids: List[int], vectors: List[list], metadata: Optional[List[dict]]
     ):
         id_strings = [str(elem) for elem in ids]
+        if metadata is not None and len(metadata) > 0:
+            if not bool(metadata[0]):  # check if metadata dict empty
+                metadata = None
+
         cls.collection.add(
             embeddings=vectors,
             metadatas=metadata,
