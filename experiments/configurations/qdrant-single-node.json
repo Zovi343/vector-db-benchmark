@@ -63,7 +63,7 @@
   {
     "name": "qdrant-m-16-ef-100",
     "engine": "qdrant",
-    "connection_params": { "timeout": 30, "port": ""},
+    "connection_params": { "timeout": 30, "port": "6333"},
     "collection_params": {
       "optimizers_config": { "memmap_threshold": 10000000 },
       "hnsw_config": { "m": 16, "ef_construct": 100 }
