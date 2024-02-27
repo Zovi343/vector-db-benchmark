@@ -2,7 +2,7 @@
     {
       "name": "lvd-model-mlp4-ncat-20-epoch-200-lrs-001-nbuck-2-bthr-02-constw--1",
       "engine": "lvd",
-      "connection_params": {"port": "8000"},
+      "connection_params": {},
       "collection_params": {
         "lmi:epochs": "[200]",
         "lmi:model_types": "['MLP-4']",
