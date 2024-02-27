@@ -20,7 +20,7 @@ opensearch-py = "^2.3.2"
 tqdm = "^4.66.1"
 psycopg = {extras = ["binary"], version = "^3.1.17"}
 pgvector = "^0.2.4"
-chromadb = "0.4.22"
+#chromadb = "0.4.22"
 
 
 [tool.poetry.dev-dependencies]
