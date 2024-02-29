@@ -14,6 +14,7 @@
         "n_buckets": 2,
         "bruteforce_threshold": 0.03,
         "constraint_weight": -1,
+        "search_until_bucket_not_empty": false,
         "parallel": 1
       }],
       "upload_params": { "parallel": 8, "batch_size": 1024 }
