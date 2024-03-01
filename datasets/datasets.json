@@ -378,11 +378,44 @@
     }
   },
   {
-    "name": "hnm_no_filters",
+    "name": "hnm_2k",
     "vector_size": 2048,
     "distance": "cosine",
     "type": "tar",
-    "path": "hnm_no_filters"
+    "path": "hnm_2k",
+    "schema": {
+      "product_code": "int",
+      "prod_name": "keyword",
+      "product_type_no": "int",
+      "product_type_name": "keyword",
+      "product_group_name": "keyword",
+      "graphical_appearance_no": "int",
+      "graphical_appearance_name": "keyword",
+      "colour_group_code": "int",
+      "colour_group_name": "keyword",
+      "perceived_colour_value_id": "int",
+      "perceived_colour_value_name": "keyword",
+      "perceived_colour_master_id": "int",
+      "perceived_colour_master_name": "keyword",
+      "department_no": "int",
+      "department_name": "keyword",
+      "index_code": "keyword",
+      "index_name": "keyword",
+      "index_group_no": "int",
+      "index_group_name": "keyword",
+      "section_no": "int",
+      "section_name": "keyword",
+      "garment_group_no": "int",
+      "garment_group_name": "keyword",
+      "detail_desc": "text"
+    }
+  },
+  {
+    "name": "hnm_2k_no_filters",
+    "vector_size": 2048,
+    "distance": "cosine",
+    "type": "tar",
+    "path": "hnm_2k_no_filters"
   },
   {
     "name": "random-100-match-kw-small-vocab-no-filters",
