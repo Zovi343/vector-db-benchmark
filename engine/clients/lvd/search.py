@@ -22,34 +22,15 @@ class LVDSearcher(BaseSearcher):
 
     @classmethod
     def init_client(cls, host, distance, connection_params: dict, search_params: dict):
-        # cls.client: QdrantClient = QdrantClient(
-        #     host,
-        #     prefer_grpc=True,
-        #     limits=httpx.Limits(max_connections=None, max_keepalive_connections=0),
-        #     **connection_params
-        # )
         cls.client = HttpClient(host=host, port=LVD_PORT)
         cls.collection = cls.client.get_collection(LVD_COLLECTION_NAME)
         cls.search_params = search_params
         cls.upload_host = host
         cls.upload_port = LVD_PORT
 
-    # Uncomment for gRPC
-    # @classmethod
-    # def get_mp_start_method(cls):
-    #     return "forkserver" if "forkserver" in mp.get_all_start_methods() else "spawn"
 
     @classmethod
     def search_one(cls, vector, meta_conditions, top) -> List[Tuple[int, float]]:
-        # res = cls.client.search(
-        #     collection_name=QDRANT_COLLECTION_NAME,
-        #     query_vector=vector,
-        #     query_filter=cls.parser.parse(meta_conditions),
-        #     limit=top,
-        #     search_params=rest.SearchParams(
-        #         **cls.search_params.get("search_params", {})
-        #     ),
-        # )
         data =  {
             "query_embeddings": [vector],
             "include": ["distances"],

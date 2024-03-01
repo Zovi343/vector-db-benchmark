@@ -327,6 +327,13 @@
     }
   },
   {
+    "name": "random_keywords_10k_no_filters",
+    "vector_size": 50,
+    "distance": "cosine",
+    "type": "tar",
+    "path": "random_keywords_10k_no_filters"
+  },
+  {
     "name": "random_keywords_100k",
     "vector_size": 50,
     "distance": "cosine",
