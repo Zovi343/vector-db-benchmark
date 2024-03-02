@@ -22,4 +22,4 @@ RUN poetry config virtualenvs.create false \
 COPY . /code
 RUN chmod 777 /code
 
-CMD ["./start_chroma_qdrant.sh"]
+CMD ["./start_all.sh"]
