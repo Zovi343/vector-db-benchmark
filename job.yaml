@@ -42,14 +42,10 @@ spec:
             - ALL
         # Define resource requirements and limits for the container.
         resources:
-          # Set resource requests (minimum required resources).
-          requests:
-            cpu: 2
-            memory: 4Gi
           # Set resource limits (maximum allowed resources).
           limits:
             cpu: 2
-            memory: 4Gi
+            memory: 8Gi
         volumeMounts:
           - name: vol-1
             mountPath: /pvc
