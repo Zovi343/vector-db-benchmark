@@ -21,5 +21,6 @@ RUN poetry config virtualenvs.create false \
 # Creating folders, and files for a project:
 COPY . /code
 RUN chmod 777 /code
+RUN chmod +x /code/start_all.sh
 
 CMD ["./start_all.sh"]
