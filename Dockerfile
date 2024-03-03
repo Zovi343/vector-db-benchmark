@@ -22,5 +22,6 @@ RUN poetry config virtualenvs.create false \
 COPY . /code
 RUN chmod 777 /code
 RUN chmod +x /code/start_all.sh
+RUN chmod +x /code/start_lvd.sh
 
-CMD ["./start_all.sh"]
+CMD ["./start_lvd.sh"]
