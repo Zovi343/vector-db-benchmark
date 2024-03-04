@@ -418,6 +418,13 @@
     "path": "hnm_2k_no_filters"
   },
   {
+    "name": "hnm_no_filters",
+    "vector_size": 2048,
+    "distance": "cosine",
+    "type": "tar",
+    "path": "hnm_no_filters"
+  },
+  {
     "name": "random-100-match-kw-small-vocab-no-filters",
     "vector_size": 256,
     "distance": "cosine",
