@@ -22,8 +22,9 @@ RUN poetry config virtualenvs.create false \
 COPY . /code
 RUN chmod 777 /code
 RUN chmod +x /code/start_all.sh
+RUN chmod +x /code/start_all_no_filters.sh
 RUN chmod +x /code/start_chroma.sh
 RUN chmod +x /code/start_weaviate.sh
 RUN chmod +x /code/start_lvd.sh
 
-CMD ["./start_chroma.sh"]
+CMD ["./start_all_no_filters.sh"]
