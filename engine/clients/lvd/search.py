@@ -37,7 +37,7 @@ class LVDSearcher(BaseSearcher):
             "where": cls.parser.parse(meta_conditions),
             "n_results": top,
             "n_buckets": cls.search_params["n_buckets"],
-            "bruteforce_threshold": cls.search_params["bruteforce_threshold"],
+            "bruteforce_threshold": None,
             "constraint_weight": cls.search_params["constraint_weight"],
             "search_until_bucket_not_empty": cls.search_params["search_until_bucket_not_empty"]
         }
