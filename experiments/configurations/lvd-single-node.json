@@ -7,14 +7,11 @@
         "lmi:epochs": "[200]",
         "lmi:model_types": "['MLP-4']",
         "lmi:lrs": "[0.01]",
-        "lmi:n_categories": "[20]",
-        "lmi:kmeans": "{'verbose': False, 'seed': 2023}"
+        "lmi:n_categories": "[20]"
       },
       "search_params": [{
         "n_buckets": 2,
-        "bruteforce_threshold": 0.2,
         "constraint_weight": -1,
-        "search_until_bucket_not_empty": false,
         "parallel": 1
       }],
       "upload_params": { "parallel": 8, "batch_size": 1024 }

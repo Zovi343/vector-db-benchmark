@@ -28,5 +28,6 @@ RUN chmod +x /code/start_weaviate.sh
 RUN chmod +x /code/start_lvd_no_filters.sh
 RUN chmod +x /code/start_milvus.sh
 RUN chmod +x /code/start_milvus_no_filters.sh
+RUN chmod +x /code/start_lvd.sh
 
-CMD ["./start_milvus_no_filters.sh"]
+CMD ["./start_lvd.sh"]
