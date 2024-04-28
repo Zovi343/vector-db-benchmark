@@ -18,7 +18,7 @@
     "search_params": [
       { "parallel": 1, "params": { "ef": 128 } }
     ],
-    "upload_params": { "parallel": 16, "index_params": { "efConstruction": 128, "M": 16 } }
+    "upload_params": { "parallel": 1, "index_params": { "efConstruction": 128, "M": 16 } }
   },
   {
     "name": "milvus-m-32-ef-128",

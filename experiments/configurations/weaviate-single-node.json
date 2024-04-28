@@ -21,7 +21,7 @@
     "search_params": [
       { "parallel": 1, "vectorIndexConfig": { "ef": 128} }
     ],
-    "upload_params": { "batch_size": 1024, "parallel": 8 }
+    "upload_params": { "batch_size": 1024, "parallel": 1 }
   },
   {
     "name": "weaviate-m-32-ef-128",

@@ -75,5 +75,5 @@ spec:
         resources:
           # Set resource requests (minimum required resources).
           limits:
-            cpu: 2
+            cpu: 1
             memory: 16Gi

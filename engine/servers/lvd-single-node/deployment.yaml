@@ -73,7 +73,6 @@ spec:
             - ALL
         # Define resource requirements and limits for the container.
         resources:
-          # Set resource requests (minimum required resources).
           limits:
             cpu: 1
-            memory: 8Gi
+            memory: 16Gi

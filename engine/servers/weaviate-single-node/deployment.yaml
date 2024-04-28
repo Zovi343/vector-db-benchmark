@@ -82,7 +82,7 @@ spec:
         resources:
           limits:
             cpu: 1
-            memory: 8Gi
+            memory: 16Gi
         env:
           - name: QUERY_DEFAULTS_LIMIT
             value: "10"
