@@ -32,4 +32,4 @@ RUN chmod +x /code/start_milvus.sh
 RUN chmod +x /code/start_milvus_no_filters.sh
 RUN chmod +x /code/start_lvd.sh
 
-CMD ["./start_chroma_no_filters.sh"]
+CMD ["./start_chroma.sh"]
