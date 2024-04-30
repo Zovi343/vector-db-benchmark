@@ -32,5 +32,6 @@ RUN chmod +x /code/start_lvd_no_filters.sh
 RUN chmod +x /code/start_milvus.sh
 RUN chmod +x /code/start_milvus_no_filters.sh
 RUN chmod +x /code/start_lvd.sh
+RUN chmod +x /code/start_all_qdrant.sh
 
-CMD ["./start_weaviate_no_filters.sh"]
+CMD ["./start_all_qdrant.sh"]
