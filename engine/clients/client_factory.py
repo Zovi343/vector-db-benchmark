@@ -42,8 +42,10 @@ ENGINE_CONFIGURATORS = {
     "opensearch": OpenSearchConfigurator,
     "redis": RedisConfigurator,
     "pgvector": PgVectorConfigurator,
+    # LVD MODIFICATION START
     "chroma": ChromaConfigurator,
     "lvd": LVDConfigurator,
+    # LVD MODIFICATION END
 }
 
 ENGINE_UPLOADERS = {
@@ -54,8 +56,10 @@ ENGINE_UPLOADERS = {
     "opensearch": OpenSearchUploader,
     "redis": RedisUploader,
     "pgvector": PgVectorUploader,
+    # LVD MODIFICATION START
     "chroma": ChromaUploader,
-    "lvd": LVDUploader
+    "lvd": LVDUploader,
+    # LVD MODIFICATION END
 }
 
 ENGINE_SEARCHERS = {
@@ -66,8 +70,10 @@ ENGINE_SEARCHERS = {
     "opensearch": OpenSearchSearcher,
     "redis": RedisSearcher,
     "pgvector": PgVectorSearcher,
+    # LVD MODIFICATION START
     "chroma": ChromaSearcher,
     "lvd": LVDSearcher
+    # LVD MODIFICATION END
 }
 
 

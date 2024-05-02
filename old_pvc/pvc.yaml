@@ -1,3 +1,4 @@
+# LVD MODIFICATION START
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -9,3 +10,4 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: nfs-csi
+# LVD MODIFICATION END

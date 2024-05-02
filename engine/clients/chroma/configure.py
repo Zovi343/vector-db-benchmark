@@ -1,3 +1,4 @@
+# LVD MODIFICATION START
 from benchmark.dataset import Dataset
 from engine.base_client.configure import BaseConfigurator
 from engine.clients.chroma.config import CHROMA_COLLECTION_NAME
@@ -35,3 +36,4 @@ class ChromaConfigurator(BaseConfigurator):
             },
             get_or_create=True, # If True, return the existing collection if it exists.
         )
+# LVD MODIFICATION END

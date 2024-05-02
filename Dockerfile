@@ -6,8 +6,10 @@ ENV PYTHONFAULTHANDLER=1 \
   PIP_NO_CACHE_DIR=off \
   PIP_DISABLE_PIP_VERSION_CHECK=on \
   PIP_DEFAULT_TIMEOUT=100 \
+# LVD MODIFICATION START
   POETRY_VERSION=1.5.1 \
   PEP517_BUILD_BACKEND=setuptools.build_meta
+# LVD MODIFICATION END
 
 RUN pip install "poetry==$POETRY_VERSION"
 
@@ -21,6 +23,7 @@ RUN poetry config virtualenvs.create false \
 
 # Creating folders, and files for a project:
 COPY . /code
+# LVD MODIFICATION START
 RUN chmod 777 /code
 RUN chmod +x /code/start_all.sh
 RUN chmod +x /code/start_all_no_filters.sh
@@ -36,3 +39,4 @@ RUN chmod +x /code/start_qdrant.sh
 RUN chmod +x /code/start_qdrant_no_filters.sh
 
 CMD ["./start_qdrant_no_filters.sh"]
+# LVD MODIFICATION END

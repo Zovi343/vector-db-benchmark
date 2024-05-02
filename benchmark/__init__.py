@@ -9,14 +9,11 @@ BASE_DIRECTORY = Path(__file__).parent.parent
 DATASETS_DIR = BASE_DIRECTORY / "datasets"
 CODE_DIR = os.path.dirname(__file__)
 ROOT_DIR = Path(os.path.dirname(CODE_DIR))
+# LVD MODIFICATION START
 KUBE_DIR = "/pvc"
 
 
 def copy_directory(src, dst):
-    """
-    Recursively copy a directory from src to dst,
-    handling the case where dst may already exist.
-    """
     if not os.path.exists(dst):
         os.makedirs(dst)
 
@@ -24,6 +21,7 @@ def copy_directory(src, dst):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
         if os.path.isdir(s):
-            copy_directory(s, d)  # Recursive call
+            copy_directory(s, d)
         else:
             shutil.copy2(s, d)
+# LVD MODIFICATION END
