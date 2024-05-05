@@ -38,5 +38,5 @@ RUN chmod +x /code/start_lvd.sh
 RUN chmod +x /code/start_qdrant.sh
 RUN chmod +x /code/start_qdrant_no_filters.sh
 
-CMD ["./start_qdrant_no_filters.sh"]
+CMD ["./start_chroma.sh"]
 # LVD MODIFICATION END
