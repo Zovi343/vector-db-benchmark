@@ -1,0 +1,191 @@
+# LVD MODIFICATION START
+# ETCD Service and Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd
+spec:
+  ports:
+    - name: client
+      port: 2379
+      protocol: TCP
+      targetPort: 2379
+  selector:
+    app: etcd
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: etcd
+  name: etcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etcd
+  template:
+    metadata:
+      labels:
+        app: etcd
+    spec:
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: etcd
+        image: registry.gitlab.ics.muni.cz:443/482857/db_wrappers:etcd
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 2379
+        env:
+          - name: ETCD_AUTO_COMPACTION_MODE
+            value: "revision"
+          - name: ETCD_AUTO_COMPACTION_RETENTION
+            value: "1000"
+          - name: ETCD_QUOTA_BACKEND_BYTES
+            value: "4294967296"
+        args:
+          - etcd
+          - -advertise-client-urls=http://127.0.0.1:2379
+          - -listen-client-urls=http://0.0.0.0:2379
+          - --data-dir
+          - /etcd
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+
+---
+# Minio Service and Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+spec:
+  ports:
+    - name: web
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    app: minio
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: minio
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: minio
+        image: registry.gitlab.ics.muni.cz:443/482857/db_wrappers:minio
+        imagePullPolicy: Always
+        command: ["minio", "server", "/minio_data"]
+        ports:
+          - containerPort: 9000
+        env:
+          - name: MINIO_ACCESS_KEY
+            value: "minioadmin"
+          - name: MINIO_SECRET_KEY
+            value: "minioadmin"
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+
+---
+# Milvus Service and Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: milvus
+spec:
+  ports:
+    - name: grpc
+      port: 19530
+      protocol: TCP
+      targetPort: 19530
+  selector:
+    app: milvus
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: milvus
+  name: milvus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: milvus
+  template:
+    metadata:
+      labels:
+        app: milvus
+    spec:
+      restartPolicy: Always
+      securityContext:
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: milvus
+        image: registry.gitlab.ics.muni.cz:443/482857/db_wrappers:milvus
+        imagePullPolicy: Always
+        command: ["milvus", "run", "standalone"]
+        ports:
+          - containerPort: 19530
+        env:
+          - name: ETCD_ENDPOINTS
+            value: "etcd:2379"
+          - name: MINIO_ADDRESS
+            value: "minio:9000"
+        resources:
+          limits:
+            cpu: 1
+            memory: 8Gi
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+# LVD MODIFICATION END

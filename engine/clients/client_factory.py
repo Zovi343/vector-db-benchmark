@@ -31,6 +31,9 @@ from engine.clients.weaviate import (
     WeaviateUploader,
 )
 
+from engine.clients.chroma import ChromaConfigurator, ChromaSearcher, ChromaUploader
+from engine.clients.lvd import LVDConfigurator, LVDSearcher, LVDUploader
+
 ENGINE_CONFIGURATORS = {
     "qdrant": QdrantConfigurator,
     "weaviate": WeaviateConfigurator,
@@ -39,6 +42,10 @@ ENGINE_CONFIGURATORS = {
     "opensearch": OpenSearchConfigurator,
     "redis": RedisConfigurator,
     "pgvector": PgVectorConfigurator,
+    # LVD MODIFICATION START
+    "chroma": ChromaConfigurator,
+    "lvd": LVDConfigurator,
+    # LVD MODIFICATION END
 }
 
 ENGINE_UPLOADERS = {
@@ -49,6 +56,10 @@ ENGINE_UPLOADERS = {
     "opensearch": OpenSearchUploader,
     "redis": RedisUploader,
     "pgvector": PgVectorUploader,
+    # LVD MODIFICATION START
+    "chroma": ChromaUploader,
+    "lvd": LVDUploader,
+    # LVD MODIFICATION END
 }
 
 ENGINE_SEARCHERS = {
@@ -59,6 +70,10 @@ ENGINE_SEARCHERS = {
     "opensearch": OpenSearchSearcher,
     "redis": RedisSearcher,
     "pgvector": PgVectorSearcher,
+    # LVD MODIFICATION START
+    "chroma": ChromaSearcher,
+    "lvd": LVDSearcher
+    # LVD MODIFICATION END
 }
 
 

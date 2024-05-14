@@ -1,0 +1,13 @@
+# LVD MODIFICATION START
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-bench-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-csi
+# LVD MODIFICATION END

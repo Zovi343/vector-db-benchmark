@@ -16,10 +16,9 @@
     "connection_params": {},
     "collection_params": {},
     "search_params": [
-      { "parallel": 1, "params": { "ef": 128 } }, { "parallel": 1, "params": { "ef": 256 } }, { "parallel": 1, "params": { "ef": 512 } },
-      { "parallel": 100, "params": { "ef": 128 } }, { "parallel": 100, "params": { "ef": 256 } }, { "parallel": 100, "params": { "ef": 512 } }
+      { "parallel": 1, "params": { "ef": 128 } }
     ],
-    "upload_params": { "parallel": 16, "index_params": { "efConstruction": 128, "M": 16 } }
+    "upload_params": { "parallel": 1, "index_params": { "efConstruction": 128, "M": 16 } }
   },
   {
     "name": "milvus-m-32-ef-128",

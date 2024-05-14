@@ -1,0 +1,57 @@
+# LVD MODIFICATION START
+# Specify the API version and resource kind for the Kubernetes Job object.
+apiVersion: batch/v1
+kind: Job
+
+# Metadata for the Job object, including a generated name starting with "job-simple-".
+metadata:
+  generateName: job-simple-
+
+# Define the specifications for the Job.
+spec:
+  # Specify the template for the Pods created by the Job.
+  template:
+    spec:
+      # Set the restart policy for the Pods to "Never," meaning they won't be restarted automatically.
+      restartPolicy: Never
+
+      # Security context settings for the pod - must be included in all k8s config files.
+      securityContext:
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+
+      # ------ THIS SEGMENT CHANGED ------
+#      imagePullSecrets:
+#        - name: gitlab-registry
+      # ----------------------------------
+
+      # Containers specification within the Pod.
+      containers:
+      - name: vector-db-benchmark
+        # Specify the container image and its registry.
+        image: registry.gitlab.ics.muni.cz:443/482857/vector-db-benchmark:latest
+        # Always pull the latest image from the registry.
+        imagePullPolicy: Always
+        # Security context settings for the container - must be included in all k8s config files.
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        # Define resource requirements and limits for the container.
+        resources:
+          # Set resource limits (maximum allowed resources).
+          limits:
+            cpu: 1
+            memory: 8Gi
+        volumeMounts:
+          - name: vol-1
+            mountPath: /pvc
+      volumes:
+        - name: vol-1
+          persistentVolumeClaim:
+            claimName: db-bench-pvc
+# LVD MODIFICATION END

@@ -1,7 +1,9 @@
 import fnmatch
 import traceback
 from typing import List
-
+from benchmark import DATASETS_DIR, KUBE_DIR, copy_directory
+from engine.base_client.client import RESULTS_DIR
+from datetime import datetime
 import stopit
 import typer
 
@@ -23,11 +25,21 @@ def run(
     skip_if_exists: bool = True,
     exit_on_error: bool = True,
     timeout: float = 86400.0,
+    # LVD MODIFICATION START
+    expname: str = "",
+    # If run on kubernetes, the datasets files need to be taken from volume
+    kube: bool = False,
+    # LVD MODIFICATION END
 ):
     """
     Example:
         python3 run.py --engines *-m-16-* --engines qdrant-* --datasets glove-*
     """
+    # LVD MODIFICATION START
+    if kube:
+        copy_directory(KUBE_DIR + "/data", DATASETS_DIR)
+    # LVD MODIFICATION END
+
     all_engines = read_engine_configs()
     all_datasets = read_dataset_config()
 
@@ -77,7 +89,16 @@ def run(
                 if exit_on_error:
                     raise e
                 continue
+    # LVD MODIFICATION START
+    now = datetime.now()
+    experiment_timestamp = f"{now.second}_{now.minute}_{now.hour}_{now.day}_{now.month}_{now.year}"
 
+    if len(expname):
+        experiment_timestamp = expname
+
+    if kube:
+        copy_directory(RESULTS_DIR, KUBE_DIR + f"/results_{experiment_timestamp}")
+    # LVD MODIFICATION END
 
 if __name__ == "__main__":
     app()

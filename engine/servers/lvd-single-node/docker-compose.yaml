@@ -1,0 +1,9 @@
+# LVD MODIFICATION START
+version: '3.9'
+
+services:
+  chroma:
+    image: lvd
+    ports:
+      - "5000:8000"
+# LVD MODIFICATION END

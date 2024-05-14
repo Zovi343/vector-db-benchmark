@@ -1,0 +1,27 @@
+# Define the stages for the CI/CD pipeline
+stages:
+  - build
+
+# Define the build job
+build_image:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
+  before_script:
+    - echo >
+        "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf '%s:%s' "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" >
+        /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:latest"
+
+  # Define rules to trigger the job only when specific files change
+  rules:
+    - if: $CI_COMMIT_BRANCH
+    - changes:
+        - Dockerfile
+        - requirements.txt
+        - run.py

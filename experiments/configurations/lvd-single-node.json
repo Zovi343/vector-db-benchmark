@@ -1,0 +1,18 @@
+[
+    {
+      "name": "lvd-model-mlp4-ncat-20-epoch-200-lrs-001-nbuck-2-bthr-02-constw--1",
+      "engine": "lvd",
+      "connection_params": {},
+      "collection_params": {
+        "lmi:epochs": "[200]",
+        "lmi:model_types": "['MLP-4']",
+        "lmi:lrs": "[0.01]",
+        "lmi:n_categories": "[20]"
+      },
+      "search_params": [{
+        "n_buckets": 2,
+        "constraint_weight": -1
+      }],
+      "upload_params": { "parallel": 1, "batch_size": 1024 }
+    }
+  ]

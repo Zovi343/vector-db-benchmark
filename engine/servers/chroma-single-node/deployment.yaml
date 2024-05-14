@@ -1,0 +1,80 @@
+# LVD MODIFICATION START
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chroma-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - hosts:
+        - chroma.dyn.cloud.e-infra.cz
+      secretName: chroma.dyn.cloud.e-infra.cz
+  rules:
+    - host: chroma.dyn.cloud.e-infra.cz
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: "/"
+            backend:
+              service:
+                name: chroma
+                port:
+                  name: api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chroma
+spec:
+  ports:
+    - name: api
+      port: 8000  # Adjusted port to match docker-compose
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    application: chroma
+  type: ClusterIP
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: chroma
+  name: chroma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: chroma
+  template:
+    metadata:
+      labels:
+        application: chroma
+    spec:
+      restartPolicy: Always
+      securityContext:
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: chroma
+        image: registry.gitlab.ics.muni.cz:443/482857/db_wrappers:chromadb
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8000  # Port as specified in docker-compose
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        # Define resource requirements and limits for the container.
+        resources:
+          limits:
+            cpu: 1
+            memory: 16Gi
+# LVD MODIFICATION END

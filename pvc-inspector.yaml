@@ -1,0 +1,30 @@
+# LVD MODIFICATION START
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-bench-pvc-inspector
+spec:
+  securityContext:
+    fsGroupChangePolicy: OnRootMismatch
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - image: busybox
+    name: pvc-inspector
+    command: ["tail"]
+    args: ["-f", "/dev/null"]
+    securityContext:
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    volumeMounts:
+    - mountPath: /pvc
+      name: db-bench-pvc
+  volumes:
+  - name: db-bench-pvc
+    persistentVolumeClaim:
+      claimName: db-bench-pvc
+# LVD MODIFICATION END
